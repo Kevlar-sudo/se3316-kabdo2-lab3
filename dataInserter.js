@@ -1,9 +1,7 @@
 //this is a test js file to try out parsing csv data
 //This works!, now to figure out how to use it in the context of the lab...
-const express = require('express')
 const {parse} = require('csv-parse')
 const fs = require('fs')
-const app = express()
 const db = require("./db");
 
 //here we parse the csv data

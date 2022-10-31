@@ -6,6 +6,7 @@ const filepath = "./albums.db";
 //the function we use to connect to the database
 function connectToDatabase() {
   if (fs.existsSync(filepath)) {
+    console.log("connected to existing database");
     return new sqlite3.Database(filepath);
   } else {
     const db = new sqlite3.Database(filepath, (error) => {
@@ -13,7 +14,7 @@ function connectToDatabase() {
         return console.error(error.message);
       }
       createTable(db);
-      console.log("Connected to the database successfully");
+      console.log("Connected to the new database successfully");
     });
     return db;
   }
@@ -23,7 +24,7 @@ function createTable(db) {
   db.exec(`
   CREATE TABLE albums
   (
-    album_id                VARCHAR(10),
+    album_id                INT,
     album_comments          VARCHAR(10),
     album_date_created      VARCHAR(50),
     album_date_released     VARCHAR(50),
