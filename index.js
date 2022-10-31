@@ -3,18 +3,18 @@ const app = express();
 const port = 3000;
 const router = express.Router();
 
-//dependencies needed for parsing the csv files
-const {parse} = require('csv-parse')
-const fs = require('fs')
+// //dependencies needed for parsing the csv files
+// const {parse} = require('csv-parse')
+// const fs = require('fs')
 
-//the parser function
-const parser = parse({columns: true}, function (err,records){
-    console.log(records);
-});
+// //the parser function
+// const parser = parse({columns: true}, function (err,records){
+//     console.log(records);
+// });
 
-fs.createReadStream(__dirname+'/raw_albums.csv').pipe(parser);
+// fs.createReadStream(__dirname+'/raw_albums.csv').pipe(parser);
 
-//setup
+// //setup
 
 
 //albums store
@@ -59,14 +59,14 @@ router.route('/') //all the routes to the base prefix
 
 router.route('/:album_id') //All routes with a part ID
 
-    //Get details of a part
+    //Get details of a specific album
     .get((req,res) =>{
         const part = albums.find(p => p.album_id === parseInt(req.params.album_id));
         if(part){
             res.send(part);
         }
         else{
-            res.status(404).send(`Part ${req.params.album_id} was not found!`);
+            res.status(404).send(`Album ${req.params.album_id} was not found!`);
         }
     
 

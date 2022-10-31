@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Kevlar-sudo/se3316-kabdo2-lab3#readme",
   "dependencies": {
+    "body-parser": "^1.20.1",
     "csv": "^6.2.1",
     "express": "^4.18.2",
     "sqlite3": "^5.1.2"

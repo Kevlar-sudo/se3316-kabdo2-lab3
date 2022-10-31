@@ -1,7 +1,9 @@
+//this js script will be used for creating the db initially
 const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 const filepath = "./albums.db";
 
+//the function we use to connect to the database
 function connectToDatabase() {
   if (fs.existsSync(filepath)) {
     return new sqlite3.Database(filepath);
@@ -16,7 +18,7 @@ function connectToDatabase() {
     return db;
   }
 }
-
+//this is the function used to create the tables in the database
 function createTable(db) {
   db.exec(`
   CREATE TABLE albums
@@ -24,6 +26,7 @@ function createTable(db) {
     album_id                VARCHAR(10),
     album_comments          VARCHAR(10),
     album_date_created      VARCHAR(50),
+    album_date_released     VARCHAR(50),
     album_engineer          VARCHAR(20),
     album_favorites         VARCHAR(10),
     album_handle            VARCHAR(50),
@@ -42,5 +45,5 @@ function createTable(db) {
   )
 `);
 }
-
+//we connect to the database after creating it
 module.exports = connectToDatabase();
