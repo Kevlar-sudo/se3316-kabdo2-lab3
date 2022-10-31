@@ -105,3 +105,6 @@ dist
 
 #we have to ignore csv files
 *.csv
+
+#we have to ignore db files
+*.db

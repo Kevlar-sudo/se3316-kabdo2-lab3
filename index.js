@@ -3,6 +3,20 @@ const app = express();
 const port = 3000;
 const router = express.Router();
 
+//dependencies needed for parsing the csv files
+const {parse} = require('csv-parse')
+const fs = require('fs')
+
+//the parser function
+const parser = parse({columns: true}, function (err,records){
+    console.log(records);
+});
+
+fs.createReadStream(__dirname+'/raw_albums.csv').pipe(parser);
+
+//setup
+
+
 //albums store
 const albums =[
     {album_id: 100,album_title:'Nicki Minaj 1',colour:'brown', plays: 0},
