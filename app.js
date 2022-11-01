@@ -127,14 +127,21 @@ router.route('/artists/:artist_id') //all routes with specified artist_id
 })
 
 //get artist info without specifiying an id
-router.route('/artists/')
+router.route('/artists')
 //get request we want to limit it to only the first 30 tracks not to overload insomnia
 .get((req,res)=>{
-    sql = "SELECT * FROM artists LIMIT 0,30";
+    sql = `SELECT * FROM artists LIMIT 0,30`;
+    //if the user has included a query parameter for the artist name
     try{
-        // const queryObject = url.parse(req.url, true).query; // query paramaters grabbing
-        // if(queryObject.field && queryObject.type) 
-        //     sql += `WHERE ${queryObject.field} LIKE '%${queryObject.type}%'`;
+        //we parse the URL to get the query params
+         const queryObject = url.parse(req.url, true).query; // query paramaters grabbing
+         //if query params exist
+         if(queryObject.name) 
+             {
+                console.log(queryObject.name);
+                //we search our SQLite database based on those query params
+                sql = `SELECT * FROM 'artists' WHERE artist_handle LIKE '%${queryObject.name}%'`;
+            }
         db.all(sql,[],(err,rows)=>{
             if (err) 
             return res.json({ status: 300, success: false, error: err});
