@@ -6,7 +6,7 @@ const url = require("url");
 const router = express.Router();
 let sql;
 //establishing a connection to the database
-const db = new sqlite.Database("./albums.db",sqlite.OPEN_READWRITE,(err)=>{
+const db = new sqlite.Database("./music.db",sqlite.OPEN_READWRITE,(err)=>{
     if (err) return console.error(err);
 })
 
@@ -84,7 +84,7 @@ router.route('/:album_id') //all routes with specified album_id
     try{
         db.all(sql,[],(err,rows)=>{
             if (err) 
-            return res.json({ status: 300, success: false, error: err +"lol"});
+            return res.json({ status: 300, success: false, error: err});
 
             if(rows.length<1) 
             return res.json({ status: 300, success: false, error: "No match"});
