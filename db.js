@@ -1,7 +1,7 @@
 //this js script will be used for creating the db initially
 const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
-const filepath = "./albums.db";
+const filepath = "./music.db";
 
 //the function we use to connect to the database
 function connectToDatabase() {
@@ -14,6 +14,7 @@ function connectToDatabase() {
         return console.error(error.message);
       }
       createTable(db);
+      createTable2(db);
       console.log("Connected to the new database successfully");
     });
     return db;
@@ -44,7 +45,23 @@ function createTable(db) {
     artist_url              VARCHAR(50),
     tags                    VARCHAR(50)
   )
+  
 `);
+}
+
+function createTable2(db){
+  db.exec(`
+  CREATE TABLE artists
+  (
+  artist_id                 INT,
+  artist_active_year_begin  VARCHAR(10),
+  artist_active_year_end    VARCHAR(50),
+  artist_associated_labels  VARCHAR(50),
+  artist_contact            VARCHAR(50),
+  artist_date_created       VARCHAR(50)
+  )
+  `
+  );
 }
 //we connect to the database after creating it
 module.exports = connectToDatabase();
