@@ -58,7 +58,7 @@ router.route('/tracks/') //all the routes to the tracks
          //if query params exist
          if(queryObject.name) 
              {
-                console.log(queryObject.name);
+                console.log("Searching based on query param: "+queryObject.name);
                 //we search our SQLite database based on those query params, we want a match for album_title or track_title
                 // n = 10, return first 10 results only
                 sql = `SELECT * FROM 'tracks' WHERE album_title LIKE '%${queryObject.name}%' OR track_title LIKE '%${queryObject.name}%' LIMIT 0,10`;
