@@ -53,9 +53,16 @@ router.route('/tracks/') //all the routes to the tracks
 .get((req,res)=>{
     sql = "SELECT * FROM tracks LIMIT 0,30";
     try{
-        // const queryObject = url.parse(req.url, true).query; // query paramaters grabbing
-        // if(queryObject.field && queryObject.type) 
-        //     sql += `WHERE ${queryObject.field} LIKE '%${queryObject.type}%'`;
+        //we parse the URL to get the query params
+         const queryObject = url.parse(req.url, true).query; // query paramaters grabbing
+         //if query params exist
+         if(queryObject.name) 
+             {
+                console.log(queryObject.name);
+                //we search our SQLite database based on those query params, we want a match for album_title or track_title
+                // n = 10, return first 10 results only
+                sql = `SELECT * FROM 'tracks' WHERE album_title LIKE '%${queryObject.name}%' OR track_title LIKE '%${queryObject.name}%' LIMIT 0,10`;
+            }
         db.all(sql,[],(err,rows)=>{
             if (err) 
             return res.json({ status: 300, success: false, error: err});
