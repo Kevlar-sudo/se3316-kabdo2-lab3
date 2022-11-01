@@ -25,26 +25,26 @@ fs.createReadStream("./raw_albums.csv")
       });
   });
 
-//   //here we parse the csv data for artists
-// fs.createReadStream("./raw_artists.csv")
-// .pipe(parse({ delimiter: ",", from_line: 2 }))
-// .on("data", function (row) {
-//   //we make the data fit to be added into our sqlite database
-//   db.serialize(function () {
-//       db.run(
-//         //inserting the data into appropriate columns 
-//         `INSERT INTO artists VALUES (?, ?, ?, ?, ?, ?)`,
-//         [row[0], row[1], row[2], row[3], row[5], row[6]],
-//         function (error) {
-//           if (error) {
-//             return console.log(error.message);
-//           }
-//           //this will return the id of the last inserted data item to keep track of where we are
-//           console.log(`Inserted a row into artists with the id: ${this.lastID}`);
-//         }
-//       );
-//     });
-// });
+  //here we parse the csv data for artists
+fs.createReadStream("./raw_artists.csv")
+.pipe(parse({ delimiter: ",", from_line: 2 }))
+.on("data", function (row) {
+  //we make the data fit to be added into our sqlite database
+  db.serialize(function () {
+      db.run(
+        //inserting the data into appropriate columns 
+        `INSERT INTO artists VALUES (?, ?, ?, ?, ?, ?)`,
+        [row[0], row[1], row[2], row[3], row[6], row[7]],
+        function (error) {
+          if (error) {
+            return console.log(error.message);
+          }
+          //this will return the id of the last inserted data item to keep track of where we are
+          console.log(`Inserted a row into artists with the id: ${this.lastID}`);
+        }
+      );
+    });
+});
 
 
 
