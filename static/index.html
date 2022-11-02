@@ -8,38 +8,38 @@
 <body>
 <h1>SE3316 Lab 3 Music Database</h1>
 <h3>Search for music tracks</h3>
-<!--Adding the search bar for letters-->
+<!--Adding the search bar for track names + albums-->
 <div class="firstSearch">
-    <input id="searchBar" type="text"
+    <input id="searchBarTracks" type="text"
     name="searchBar" placeholder="Enter track or album name">
-    <button id="searchButtonLetters" >🔎︎</button>
+    <button id="searchButtonTracks" >🔎︎</button>
 </div>
 
-<!--Adding the search bar for numbers-->
+<!--Adding the search bar for track id-->
 
 <div class="secondSearch">
-    <input id="searchBarNumber" type="text"
+    <input id="searchBarTracksId" type="text"
     name="searchBar" placeholder="Enter the track_id">
-    <button id="searchButtonNumbers" >🔎︎</button>
+    <button id="searchButtonTracksId" >🔎︎</button>
 </div>
-
+<!--Adding a search bar for album names-->
 <h3>Search for artists</h3>
 <div class="thirdSearch">
-    <input id="searchBar" type="text"
+    <input id="searchBarArtist" type="text"
     name="searchBar" placeholder="Enter the artist's name">
-    <button id="searchButtonLetters" >🔎︎</button>
+    <button id="searchButtonArtist" >🔎︎</button>
 </div>
 
-<!--Adding the search bar for numbers-->
+<!--Adding the search bar for album id-->
 
 <div class="fourthSearch">
-    <input id="searchBarNumber" type="text"
+    <input id="searchBarArtistId" type="text"
     name="searchBar" placeholder="Enter the artist_id">
-    <button id="searchButtonNumbers" >🔎︎</button>
+    <button id="searchButtonArtistId" >🔎︎</button>
 </div>
 
 <div class="intro">
-    <h2>Test Text <button id="get-song">Reload</button></h2>
+    <h2>Results we found<button id="get-song">Reload</button></h2>
     <ol id="inventory"></ol>
 </div>
 <div class="admin">

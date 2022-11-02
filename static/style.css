@@ -30,7 +30,7 @@ input{
     width: 5ch;
 }
 /*the styling for the search buttons*/
-#searchButtonLetters, #searchButtonNumbers{
+#searchButtonTracks, #searchButtonTracksId, #searchButtonArtist, #searchButtonArtistId{
     padding: 6px 6px 6px 6px;
     border: 2px solid;
     border-radius: 5px 5px 5px 5px;
@@ -42,7 +42,7 @@ input{
     background-color: lightgrey;
  }
  /*the styling for the search bars*/
- #searchBar, #searchBarNumber{
+ #searchBarTracks, #searchBarTracksId, #searchBarArtist, #searchBarArtistId{
     
    padding: 6px 6px 6px 6px;
    width: 220px;

@@ -10,7 +10,8 @@ const db = new sqlite.Database("./music.db",sqlite.OPEN_READWRITE,(err)=>{
     if (err) return console.error(err);
 })
 
-
+//setup seving front-end code
+app.use('/', express.static('static'));
 
 
 //setup middleware to do logging
