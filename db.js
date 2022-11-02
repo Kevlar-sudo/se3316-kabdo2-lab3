@@ -1,7 +1,8 @@
 //this js script will be used for creating the db initially
 const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
-const filepath = "./music.db";
+//REMEMBER TO CHANGE THIS ONLY for testing real db is ./music.db
+const filepath = "./test.db";
 
 //the function we use to connect to the database
 function connectToDatabase() {

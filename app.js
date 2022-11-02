@@ -5,8 +5,8 @@ const sqlite = require("sqlite3").verbose();
 const url = require("url");
 const router = express.Router();
 let sql;
-//establishing a connection to the database
-const db = new sqlite.Database("./music.db",sqlite.OPEN_READWRITE,(err)=>{
+//establishing a connection to the database CHANGE to ./music.db after tests
+const db = new sqlite.Database("./test.db",sqlite.OPEN_READWRITE,(err)=>{
     if (err) return console.error(err);
 })
 
@@ -194,6 +194,107 @@ router.route('/genres')
 
     }
 })
+
+//get genre info without specifying an id
+router.route('/playlist')
+//get request for al lthe genre info
+
+//NO WORK
+.get((req,res)=>{
+    sql = `SELECT * FROM genres`;
+    //if the user has included a query parameter for the artist name
+    try{
+        db.all(sql,[],(err,rows)=>{
+            if (err) 
+            return res.json({ status: 300, success: false, error: err});
+
+            if(rows.length<1) 
+            return res.json({ status: 300, success: false, error: "No match"});
+
+            return res.json({ status:200, data: rows, success: true});
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+}) //ok this works we are able to create a specific playlist
+//WORK
+.put((req,res)=>{
+    try{
+        const {playlist_name} = req.body;
+        console.log("we want to create playlist: "+playlist_name)
+        sql = `CREATE TABLE IF NOT EXISTS ${playlist_name} (playlist_id INT,track_id INT)`;
+        db.run(sql, (err)=>{
+            if(err) return res.json({status:300,success:false,error:err});
+
+            console.log("successful created playlist: "+playlist_name);
+        })
+        return res.json({
+            status: 200,
+            success: true,
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+})
+//post req we can use this later for adding songs to the playlist (it worked for album before)
+//NO WORK
+.post((req,res)=>{
+    try{
+        const {playlist_id,track_id} = req.body;
+        sql = "INSERT INTO Testing2(playlist_id, track-id) VALUES (?,?)";
+        db.run(sql,[playlist_id,track_id], (err)=>{
+            if(err) return res.json({status:300,success:false,error:err});
+
+            console.log("successful input",playlist_id,track_id);
+        })
+        return res.json({
+            status: 200,
+            success: true,
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+})
+//WORK
+.delete((req,res)=>{
+    try{
+        const {playlist_name} = req.body;
+        console.log("we want to delete playlist: "+playlist_name);
+        sql = `DROP TABLE IF EXISTS ${playlist_name}`;
+        db.run(sql, (err)=>{
+            if(err) return res.json({status:300,success:false,error:err});
+
+            console.log("successful delete");
+        })
+        return res.json({
+            status: 200,
+            success: true,
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+})
+
 
 
 
