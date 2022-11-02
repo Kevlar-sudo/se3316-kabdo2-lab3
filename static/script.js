@@ -14,7 +14,7 @@ const searchButtonArtistId = document.getElementById("searchButtonArtistId");
 
 searchButtonArtistId.addEventListener('click',searchArtistId)
 
-
+//THIS WORKS lol but we need to format
 function searchArtistId(){
     let input = searchBarArtistId.value;
     console.log(input);
@@ -29,7 +29,8 @@ function searchArtistId(){
         
         const item = document.createElement('li');
         
-        item.appendChild(document.createTextNode(JSON.stringify(data)));
+        console.log(data.data[0].artist_handle);
+        item.appendChild(document.createTextNode("id: "+data.data[0].artist_id+"\n,handle: "+data.data[0].artist_handle+"\n,Date Created: "+data.data[0].artist_date_created+"\n,Contact: "+ data.data[0].artist_contact+"\n,Associated Label: "+data.data[0].artist_associated_labels+"\n,Active Year End: "+data.data[0].artist_active_year_end+"\n,Active Year Begin: "+data.data[0].artist_active_year_begin));
         l.appendChild(item);
         
     })
