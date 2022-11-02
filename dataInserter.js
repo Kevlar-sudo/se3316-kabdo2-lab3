@@ -46,6 +46,27 @@ fs.createReadStream("./raw_artists.csv")
     });
 });
 
+ //here we parse the csv data for genres
+ fs.createReadStream("./genres.csv")
+ .pipe(parse({ delimiter: ",", from_line: 2 }))
+ .on("data", function (row) {
+   //we make the data fit to be added into our sqlite database
+   db.serialize(function () {
+       db.run(
+         //inserting the data into appropriate columns 
+         `INSERT INTO genres VALUES (?, ?, ?)`,
+         [row[0], row[3], row[2]],
+         function (error) {
+           if (error) {
+             return console.log(error.message);
+           }
+           //this will return the id of the last inserted data item to keep track of where we are
+           console.log(`Inserted a row into genres with the id: ${this.lastID}`);
+         }
+       );
+     });
+ });
+
 
 
 

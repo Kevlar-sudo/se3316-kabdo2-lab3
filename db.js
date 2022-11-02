@@ -15,6 +15,7 @@ function connectToDatabase() {
       }
       createTable(db);
       createTable2(db);
+      createTable3(db);
       console.log("Connected to the new database successfully");
     });
     return db;
@@ -54,6 +55,18 @@ function createTable2(db){
   artist_contact            VARCHAR(20),
   artist_date_created       VARCHAR(20),
   artist_handle             VARCHAR(20)
+  )
+  `
+  );
+}
+
+function createTable3(db){
+  db.exec(`
+  CREATE TABLE genres
+  (
+  genre_id                 INT,
+  genre_title              VARCHAR(10),
+  genre_parent_id          INT
   )
   `
   );

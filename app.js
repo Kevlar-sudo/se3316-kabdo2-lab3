@@ -169,9 +169,36 @@ router.route('/artists')
     }
 })
 
+//get genre info without specifying an id
+router.route('/genres')
+//get request for al lthe genre info
+.get((req,res)=>{
+    sql = `SELECT * FROM genres`;
+    //if the user has included a query parameter for the artist name
+    try{
+        db.all(sql,[],(err,rows)=>{
+            if (err) 
+            return res.json({ status: 300, success: false, error: err});
+
+            if(rows.length<1) 
+            return res.json({ status: 300, success: false, error: "No match"});
+
+            return res.json({ status:200, data: rows, success: true});
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+})
 
 
-//install the router at /api/albums
+
+
+//install the router at /api
 app.use('/api',router)
 
 app.listen(3000);
