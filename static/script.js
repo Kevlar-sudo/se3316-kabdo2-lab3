@@ -20,6 +20,8 @@ searchButtonArtistId.addEventListener('click',searchArtistId);
 addPlaylist.addEventListener('click',createPlaylist);
 deleteList.addEventListener('click',deletePlaylist)
 
+document.getElementById("viewList").addEventListener('click',viewlist);
+
 
 //THIS WORKS lol but we need to format
 function searchArtistId(){
@@ -42,7 +44,7 @@ function searchArtistId(){
         
     })
     )
-}
+};
 //create new playlist front end WORKING
 function createPlaylist(){
     const newList={
@@ -75,7 +77,7 @@ function createPlaylist(){
     })
     .catch()
     
-}
+};
 //delete playlist
 function deletePlaylist(){
     var playListValue = document.getElementById('playsL').value;
@@ -108,4 +110,30 @@ function deletePlaylist(){
     })
     .catch()
     
-}
+};
+//THIS WORKS TO SHOW ALL AVAILABLE TRACKS IN A CERTAIN PLAYLIST
+function viewlist(){
+    var playListValue = document.getElementById('playsL').value;
+    console.log(playListValue);
+    fetch("/api/playlist/"+playListValue,{
+        method: 'GET',
+        
+    })
+    .then(res =>res.json()
+    .then(data => {
+        console.log(data);
+        const l = document.getElementById('listTracks');
+        
+        
+        
+        console.log(data.data[0].track_id);
+        console.log(data.data.length);
+        for(i =0; i<data.data.length;i++)
+       { 
+        const item = document.createElement('li');
+        item.appendChild(document.createTextNode("track_id: "+data.data[i].track_id));
+        l.appendChild(item);}
+        
+    })
+    )
+};

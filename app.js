@@ -225,14 +225,14 @@ router.route('/playlist')
         });
 
     }
-}) //ok this works we are able to create a specific playlist
+}) //ok this works we are able to a new create a specific playlist
 //WORK
 .put((req,res)=>{
     const {playlist_name} = req.body;
     console.log("we want to create playlist: "+playlist_name);
     //add the playlist to our data structure
     try{
-        sql = `CREATE TABLE IF NOT EXISTS ${playlist_name} (playlist_id INT,track_id INT)`;
+        sql = `CREATE TABLE IF NOT EXISTS ${playlist_name} (track_id INT)`;
         db.run(sql, (err)=>{
             if(err) return res.json({status:300,success:false,error:err});
 
@@ -251,16 +251,15 @@ router.route('/playlist')
 
     }
 })
-//post req we can use this later for adding songs to the playlist (it worked for album before)
-//works
+//works to add new song to playlist
 .post((req,res)=>{
     try{
-        const {playlist_name,playlist_id,track_id} = req.body;
-        sql = `INSERT INTO ${playlist_name}(playlist_id, track_id) VALUES (?,?)`;
-        db.run(sql,[playlist_id,track_id], (err)=>{
+        const {playlist_name,track_id} = req.body;
+        sql = `INSERT INTO ${playlist_name} ( track_id) VALUES (?)`;
+        db.run(sql,[track_id], (err)=>{
             if(err) return res.json({status:300,success:false,error:err});
 
-            console.log("successful input track: "+track_id+" into playlist: "+playlist_id+` into list ${playlist_name}`);
+            console.log("successful input track: "+track_id+ ` into list ${playlist_name}`);
         })
         return res.json({
             status: 200,
@@ -314,7 +313,7 @@ router.route('/playlist')
 router.route('/playlist/:name')
 //get request for al lthe genre info
 
-//NO WORK to get all the playlists
+//No work anymore
 .get((req,res)=>{
     sql = `SELECT * FROM ${(req.params.name)}`;
     console.log(`We are looking for playlist ${(req.params.name)}`);
@@ -322,31 +321,6 @@ router.route('/playlist/:name')
     
     try{
         db.all(sql,[],(err,rows)=>{
-            if (err) 
-            return res.json({ status: 300, success: false, error: err});
-
-            if(rows.length<1) 
-            return res.json({ status: 300, success: false, error: "No match"});
-
-            return res.json({ status:200, data: rows, success: true});
-        });
-
-    }catch (error){
-        return res.json({
-            status: 400,
-            success:false,
-        });
-
-    }
-})
-//NO WORK to get all the playlists
-.post((req,res)=>{
-    const {playlist_id,track_id} = req.body;
-        sql = `INSERT INTO ${(req.params.name)}(playlist_id,track_id) VALUES (?,?)`;
-    
-    
-    try{
-        db.all(sql,[playlist_id,track_id],(err,rows)=>{
             if (err) 
             return res.json({ status: 300, success: false, error: err});
 
