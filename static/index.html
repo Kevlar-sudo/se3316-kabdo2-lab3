@@ -45,12 +45,23 @@
 <div class="admin">
     <h2>Manage Playlists</h2>
     <span>
-        Name: <input type="text" id="name">
-        Songs: <input type ="text" id="colour">
-        Genre: <input type="text" id="stock">
-        <button id="additem">Add</button>
+        <h4>Add New Playlist</h4>
+        Name: <input type="text" id="playlistName">
+        <button id="addPlaylist">Add</button>
     </span>
-    <span id="status"></span>
+
+    <span id="currentPlaylists">
+        <h4>View Current Playlists</h4>
+        <label for="Available Lists">Choose a Playlist:</label>
+
+        <select name="playsL" id="playsL">
+         </select>
+        <button id="additem">View</button>
+        <button id="deleteList">Delete</button>
+        <h4>Current Tracks</h4>
+        <h4>Add Tracks to Playlist</h4>
+        Track_id <input type="text" id="playlistName">
+    </span>
 </div>
 <script defer src="script.js"></script>
 </body>

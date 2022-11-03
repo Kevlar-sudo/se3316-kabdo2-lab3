@@ -11,8 +11,12 @@ const searchBarArtistId = document.getElementById("searchBarArtistId");
 const searchButtonArtist = document.getElementById("searchButtonArtist");
 const searchButtonArtistId = document.getElementById("searchButtonArtistId");
 
+//for playlist
+const addPlaylist = document.getElementById("addPlaylist");
 
-searchButtonArtistId.addEventListener('click',searchArtistId)
+
+searchButtonArtistId.addEventListener('click',searchArtistId);
+addPlaylist.addEventListener('click',createPlaylist);
 
 //THIS WORKS lol but we need to format
 function searchArtistId(){
@@ -35,4 +39,38 @@ function searchArtistId(){
         
     })
     )
+}
+//create new playlist front end WORKING
+function createPlaylist(){
+    const newList={
+        playlist_name: document.getElementById("playlistName").value
+    }
+    console.log(newList);
+    fetch("/api/playlist/",{
+        method: 'PUT',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(newList)
+    })
+    .then(res => {
+        if(res.ok){
+            res.json()
+            .then(data => {
+                console.log(data);
+                //add the new playlist to drop down list
+                var playsL = document.getElementById('playsL');
+                var option = document.createElement("option");
+                option.text = document.getElementById("playlistName").value;
+                playsL.add(option);
+
+                document.getElementById('status').innerText = `Created playlist ${playlist_name}`;
+            })
+            .catch(err => console.log('Failed to get json object'))
+        }
+        else{
+            console.log('Error: ',res.status);
+            document.getElementById('status').innerText = 'Failed to add item';
+        }
+    })
+    .catch()
+    
 }
