@@ -21,6 +21,7 @@ addPlaylist.addEventListener('click',createPlaylist);
 deleteList.addEventListener('click',deletePlaylist)
 
 document.getElementById("viewList").addEventListener('click',viewlist);
+document.getElementById("addTrack").addEventListener('click',addTrack);
 
 
 //THIS WORKS lol but we need to format
@@ -115,7 +116,9 @@ function deletePlaylist(){
 function viewlist(){
     var playListValue = document.getElementById('playsL').value;
     console.log(playListValue);
+    //this part is to clear the search upon consecutive view button clicks
     const l = document.getElementById('listTracks');
+    //we loop through the list and while it has a child we remove them
     while(l.firstChild){
         l.removeChild(l.firstChild);
     }
@@ -128,10 +131,6 @@ function viewlist(){
         console.log(data);
         const l = document.getElementById('listTracks');
         
-        
-        
-        console.log(data.data[0].track_id);
-        console.log(data.data.length);
         for(i =0; i<data.data.length;i++)
        { 
         const item = document.createElement('li');
@@ -141,7 +140,38 @@ function viewlist(){
     })
     )
 };
-
+//the function to 
 function addTrack(){
+     
+    const newTrack={
+        playlist_name: document.getElementById("playsL").value,
+        track_id : document.getElementById("trackName").value
+    }
+    console.log(newTrack);
+    fetch("/api/playlist/",{
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(newTrack)
+    })
+    .then(res => {
+        if(res.ok){
+            res.json()
+            .then(data => {
+                console.log(data);
+                //add the object to the list
+                const l = document.getElementById('listTracks');
+                const item = document.createElement('li');
+                item.appendChild(document.createTextNode("track_id: "+data.data[0].track_id));
+                l.appendChild(item);
+                
+            })
+            .catch(err => console.log('Failed to get json object'))
+        }
+        else{
+            console.log('Error: ',res.status);
+            document.getElementById('status').innerText = 'Failed to add item';
+        }
+    })
+    .catch()
 
-}
+};
