@@ -200,7 +200,7 @@ router.route('/genres')
 router.route('/playlist')
 //get request for al lthe genre info
 
-//NO WORK
+//working to get all the playlists
 .get((req,res)=>{
     sql = `SELECT name FROM sqlite_schema WHERE 
     type = 'table' AND name NOT LIKE 'genres'
@@ -290,7 +290,6 @@ router.route('/playlist')
     }
     try{
         const {playlist_name} = req.body;
-        console.log("we want to delete playlist: "+playlist_name);
         sql = `DROP TABLE IF EXISTS ${playlist_name}`;
         db.run(sql, (err)=>{
             if(err) return res.json({status:300,success:false,error:err});
@@ -300,6 +299,61 @@ router.route('/playlist')
         return res.json({
             status: 200,
             success: true,
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+});
+
+//get genre info with specifying a playlist name
+router.route('/playlist/:name')
+//get request for al lthe genre info
+
+//NO WORK to get all the playlists
+.get((req,res)=>{
+    sql = `SELECT * FROM ${(req.params.name)}`;
+    console.log(`We are looking for playlist ${(req.params.name)}`);
+    
+    
+    try{
+        db.all(sql,[],(err,rows)=>{
+            if (err) 
+            return res.json({ status: 300, success: false, error: err});
+
+            if(rows.length<1) 
+            return res.json({ status: 300, success: false, error: "No match"});
+
+            return res.json({ status:200, data: rows, success: true});
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+})
+//NO WORK to get all the playlists
+.post((req,res)=>{
+    const {playlist_id,track_id} = req.body;
+        sql = `INSERT INTO ${(req.params.name)}(playlist_id,track_id) VALUES (?,?)`;
+    
+    
+    try{
+        db.all(sql,[playlist_id,track_id],(err,rows)=>{
+            if (err) 
+            return res.json({ status: 300, success: false, error: err});
+
+            if(rows.length<1) 
+            return res.json({ status: 300, success: false, error: "No match"});
+
+            return res.json({ status:200, data: rows, success: true});
         });
 
     }catch (error){
