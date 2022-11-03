@@ -115,6 +115,10 @@ function deletePlaylist(){
 function viewlist(){
     var playListValue = document.getElementById('playsL').value;
     console.log(playListValue);
+    const l = document.getElementById('listTracks');
+    while(l.firstChild){
+        l.removeChild(l.firstChild);
+    }
     fetch("/api/playlist/"+playListValue,{
         method: 'GET',
         
@@ -137,3 +141,7 @@ function viewlist(){
     })
     )
 };
+
+function addTrack(){
+
+}
