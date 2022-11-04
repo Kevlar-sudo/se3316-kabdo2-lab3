@@ -154,7 +154,7 @@ function addTrack(){
         if(data['success'] == true){
         const l = document.getElementById('listTracks');
         const item = document.createElement('li');
-        item.appendChild(document.createTextNode(`track_id: ${data.data[0].track_id},  artist: ${data.data[0].artist_name}, album: ${data.data[0].album_title}, playtime: ${data.data[0].track_duration}, album: ${data.data[0].album_title}}`));
+        item.appendChild(document.createTextNode(`track_id: ${data.data[0].track_id},  artist: ${data.data[0].artist_name}, album: ${data.data[0].album_title}, playtime: ${data.data[0].track_duration}, album: ${data.data[0].album_title}`));
         l.appendChild(item);
         }
         //checking if the track exists in the database
