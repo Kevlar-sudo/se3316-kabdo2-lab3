@@ -6,6 +6,8 @@ const url = require("url");
 const router = express.Router();
 let sql;
 
+let myArr = {};
+
 //establishing a connection to the database CHANGE to ./music.db after tests
 const db = new sqlite.Database("./music.db",sqlite.OPEN_READWRITE,(err)=>{
     if (err) return console.error(err);
@@ -196,9 +198,9 @@ router.route('/genres')
     }
 })
 
-//get genre info without specifying an id
+
 router.route('/playlist')
-//get request for al lthe genre info
+
 
 //working to get all the playlists
 .get((req,res)=>{
@@ -230,6 +232,8 @@ router.route('/playlist')
 .put((req,res)=>{
     const {playlist_name} = req.body;
     console.log("we want to create playlist: "+playlist_name);
+    //this will keep track of the total number of tracks, initially zero when we create the list
+    myArr[playlist_name] = 0;
     //add the playlist to our data structure
     try{
         sql = `CREATE TABLE IF NOT EXISTS ${playlist_name} (track_id INT)`;
@@ -260,10 +264,12 @@ router.route('/playlist')
             if(err) return res.json({status:300,success:false,error:err});
 
             console.log("successful input track: "+track_id+ ` into list ${playlist_name}`);
+            myArr[playlist_name] = ++myArr[playlist_name];
         })
         return res.json({
             status: 200,
             success: true,
+            noOfTracks: myArr[playlist_name],
         });
 
     }catch (error){
@@ -327,7 +333,7 @@ router.route('/playlist/:name')
             if(rows.length<1) 
             return res.json({ status: 300, success: false, error: "No match"});
 
-            return res.json({ status:200, data: rows, success: true});
+            return res.json({ status:200, data: rows, success: true, noOfTracks: myArr[req.params.name]});
         });
 
     }catch (error){
