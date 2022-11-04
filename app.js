@@ -7,7 +7,7 @@ const router = express.Router();
 let sql;
 
 //establishing a connection to the database CHANGE to ./music.db after tests
-const db = new sqlite.Database("./test.db",sqlite.OPEN_READWRITE,(err)=>{
+const db = new sqlite.Database("./music.db",sqlite.OPEN_READWRITE,(err)=>{
     if (err) return console.error(err);
 })
 

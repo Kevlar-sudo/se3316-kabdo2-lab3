@@ -142,6 +142,30 @@ function viewlist(){
 };
 //the function to 
 function addTrack(){
+    let input = document.getElementById("trackName").value
+    fetch("/api/tracks/"+input,{
+        method: 'GET',
+        
+    })
+    .then(res =>res.json()
+    .then(data => {
+        console.log(data);
+        
+        if(data['success'] == true){
+        const l = document.getElementById('listTracks');
+        const item = document.createElement('li');
+        item.appendChild(document.createTextNode(`track_id: ${data.data[0].track_id},  artist: ${data.data[0].artist_name}, album: ${data.data[0].album_title}, playtime: ${data.data[0].track_duration}, album: ${data.data[0].album_title}}`));
+        l.appendChild(item);
+        }
+        //checking if the track exists in the database
+        if(data['success'] == false){
+            alert("This track doesn't exist!");
+            return;
+        }
+        
+    })
+    )
+    
      
     const newTrack={
         playlist_name: document.getElementById("playsL").value,
@@ -157,12 +181,13 @@ function addTrack(){
         if(res.ok){
             res.json()
             .then(data => {
-                console.log(data);
+                
                 //add the object to the list
-                const l = document.getElementById('listTracks');
-                const item = document.createElement('li');
-                item.appendChild(document.createTextNode("track_id: "+data.data[0].track_id));
-                l.appendChild(item);
+                // const l = document.getElementById('listTracks');
+                // const item = document.createElement('li');
+                // item.appendChild(document.createTextNode("track_id: "+data.data[0].track_id));
+                // l.appendChild(item);
+                
                 
             })
             .catch(err => console.log('Failed to get json object'))

@@ -2,7 +2,7 @@
 const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 //REMEMBER TO CHANGE THIS ONLY for testing real db is ./music.db
-const filepath = "./test.db";
+const filepath = "./music.db";
 
 //the function we use to connect to the database
 function connectToDatabase() {
