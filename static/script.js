@@ -512,3 +512,38 @@ searchButtonTracks.addEventListener('click',searchTrackName);
     })
     )
 };
+
+document.getElementById("deleteTrack").addEventListener('click',deleteTrackFromPlaylist);
+
+//to delete a specific track from a playlist
+function deleteTrackFromPlaylist(){
+  
+  var playListValue = document.getElementById('playsL').value;
+  const removeTrack={
+      track_id: document.getElementById("trackNameDelete").value
+  }
+  fetch("/api/playlist/"+playListValue,{
+      method: 'DELETE',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(removeTrack)
+  })
+  .then(res => {
+      if(res.ok){
+          res.json()
+          .then(data => {
+              console.log(data);
+              //add the new playlist to drop down list
+              //window.alert("success!");
+              
+              document.getElementById('status').innerText = `Created playlist ${playlist_name}`;
+          })
+          .catch(err => console.log('Failed to get json object'))
+      }
+      else{
+          console.log('Error: ',res.status);
+          
+      }
+  })
+  .catch()
+  
+};

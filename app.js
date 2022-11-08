@@ -319,7 +319,7 @@ router.route('/playlist')
 router.route('/playlist/:name')
 //get request for al lthe genre info
 
-//No work anymore
+
 .get((req,res)=>{
     sql = `SELECT * FROM ${(req.params.name)}`;
     console.log(`We are looking for playlist ${(req.params.name)}`);
@@ -344,6 +344,42 @@ router.route('/playlist/:name')
 
     }
 })
+
+router.route('/playlist/:name')
+
+.delete((req,res)=>{
+    const {track_id} = req.body;
+    console.log("we want to delete track: "+track_id+"from playlist: "+req.params.name);
+    //add the playlist to our data structure
+    
+    if(req.params.name == "genres" || req.params.name =="artists" || req.params.name == "tracks"){
+        console.log("500 This database is protected and can't be deleted");
+        return res.json({
+            status: 500,
+            success: false,
+        });
+    }
+    try{
+        const {track_id} = req.body;
+        sql = `DELETE FROM ${(req.params.name)} where track_id = ${track_id}`;
+        db.run(sql, (err)=>{
+            if(err) return res.json({status:300,success:false,error:err});
+
+            console.log("successful delete");
+        })
+        return res.json({
+            status: 200,
+            success: true,
+        });
+
+    }catch (error){
+        return res.json({
+            status: 400,
+            success:false,
+        });
+
+    }
+});
 
 
 //install the router at /api
