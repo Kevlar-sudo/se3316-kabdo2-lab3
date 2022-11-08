@@ -42,7 +42,7 @@ function searchArtistId(){
         
         const item = document.createElement('li');
         
-        console.log(data.data[0].artist_handle);
+        
         item.appendChild(document.createTextNode("id: "+data.data[0].artist_id+"\n,handle: "+data.data[0].artist_handle+"\n,Date Created: "+data.data[0].artist_date_created+"\n,Contact: "+ data.data[0].artist_contact+"\n,Associated Label: "+data.data[0].artist_associated_labels+"\n,Active Year End: "+data.data[0].artist_active_year_end+"\n,Active Year Begin: "+data.data[0].artist_active_year_begin));
         l.appendChild(item);
         
@@ -88,7 +88,6 @@ function deletePlaylist(){
     const removeList={
         playlist_name: document.getElementById("playsL").value
     }
-    console.log(removeList);
     fetch("/api/playlist/",{
         method: 'DELETE',
         headers: {'Content-type': 'application/json'},
@@ -118,7 +117,7 @@ function deletePlaylist(){
 //THIS WORKS TO SHOW ALL AVAILABLE TRACKS IN A CERTAIN PLAYLIST
 function viewlist(){
     var playListValue = document.getElementById('playsL').value;
-    console.log(playListValue);
+    
 
     if(durations[document.getElementById('playsL').value] == undefined)
     {durations[document.getElementById('playsL').value] = [];}
@@ -138,15 +137,13 @@ function viewlist(){
         console.log(data);
         const l = document.getElementById('listTracks');
         const texter = document.getElementById("cTrack");
-        console.log(data.noOfTracks);
+        
        
-        console.log(playListTracks[playListValue]);
-        console.log(playListTracks[playListValue][0]);
-        console.log("length"+playListTracks[playListValue].length);
+        
         
         for(i =0; i<playListTracks[playListValue].length;i++)
        {
-        console.log("round");
+        
         const item = document.createElement('li');
         item.appendChild(document.createTextNode(`track_id: ${playListTracks[playListValue][i][0]},  artist: ${playListTracks[playListValue][i][1]}, album: ${playListTracks[playListValue][i][2]}, playtime: ${playListTracks[playListValue][i][3]}, album: ${playListTracks[playListValue][i][4]}`));
         l.appendChild(item);
@@ -155,7 +152,6 @@ function viewlist(){
         durations[playListValue].push(playListTracks[playListValue][i][3]);
     }
         var totalSeconds = durations[playListValue].map(toSeconds).reduce(sum);
-        console.log(totalSeconds);
         var minutes = Math. floor(totalSeconds / 60);
         var seconds = totalSeconds - minutes * 60;
         texter.innerText = "Current Tracks\nNumber of tracks: "+ data.noOfTracks+"\nPlaylist Listening Time: "+minutes+":"+seconds;
