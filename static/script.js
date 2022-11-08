@@ -227,14 +227,14 @@ document.getElementById("sortLength").addEventListener('click',sortListlength);
   //here will go sorter function :O
 function sortListArtist() {
     var list, i, switching, b, shouldSwitch;
-    list = document.getElementById("listTracks");
+    list = document.getElementById("inventory");
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
       // Start by saying: no switching is done:
       switching = false;
-      b = list.getElementsByTagName("LI");
+      b = list.getElementsByClassName("searchResult");
       // Loop through all list items:
       for (i = 0; i < (b.length - 1); i++) {
         // Start by saying there should be no switching:
@@ -243,6 +243,7 @@ function sortListArtist() {
         switch place with the current item: */
 
         //to get just the artist
+        
         console.log(b[i].innerText.toLowerCase().split("artist: ")[1].split(",")[0]);
         if (b[i].innerText.toLowerCase().split("artist: ")[1].split(",")[0] > b[i + 1].innerText.toLowerCase().split("artist: ")[1].split(",")[0]) {
           /* If next item is alphabetically lower than current item,
@@ -263,14 +264,14 @@ function sortListArtist() {
   //to sort by track
   function sortListTrack() {
     var list, i, switching, b, shouldSwitch;
-    list = document.getElementById("listTracks");
+    list = document.getElementById("inventory");
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
       // Start by saying: no switching is done:
       switching = false;
-      b = list.getElementsByTagName("LI");
+      b = list.getElementsByClassName("searchResult");
       // Loop through all list items:
       for (i = 0; i < (b.length - 1); i++) {
         // Start by saying there should be no switching:
@@ -279,8 +280,9 @@ function sortListArtist() {
         switch place with the current item: */
 
         //to get just the track_id
-        console.log(parseInt(b[i].innerText.toLowerCase().split("track_id: ")[1].split(",")[0]));
-        if (parseInt(b[i].innerText.toLowerCase().split("track_id: ")[1].split(",")[0]) > parseInt(b[i + 1].innerText.toLowerCase().split("track_id: ")[1].split(",")[0])) {
+        console.log(b[i].innerText.toLowerCase());
+        console.log(b[i].innerText.toLowerCase().split("name: ")[1].split("\n")[0]);
+        if (b[i].innerText.toLowerCase().split("name: ")[1].split("\n")[0] > b[i + 1].innerText.toLowerCase().split("name: ")[1].split("\n")[0]) {
           /* If next item is alphabetically lower than current item,
           mark as a switch and break the loop: */
           shouldSwitch = true;
@@ -298,14 +300,14 @@ function sortListArtist() {
 
   function sortListAlbum() {
     var list, i, switching, b, shouldSwitch;
-    list = document.getElementById("listTracks");
+    list = document.getElementById("inventory");
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
       // Start by saying: no switching is done:
       switching = false;
-      b = list.getElementsByTagName("LI");
+      b = list.getElementsByClassName("searchResult");
       // Loop through all list items:
       for (i = 0; i < (b.length - 1); i++) {
         // Start by saying there should be no switching:
@@ -314,8 +316,8 @@ function sortListArtist() {
         switch place with the current item: */
 
         //to get just the artist
-        console.log(b[i].innerText.toLowerCase().split("album: ")[1].split(",")[0]);
-        if (b[i].innerText.toLowerCase().split("album: ")[1].split(",")[0] > b[i + 1].innerText.toLowerCase().split("album: ")[1].split(",")[0]) {
+        console.log(b[i].innerText.toLowerCase().split("album name: ")[1].split("\n")[0]);
+        if (b[i].innerText.toLowerCase().split("album name: ")[1].split("\n")[0] > b[i + 1].innerText.toLowerCase().split("album name: ")[1].split("\n")[0]) {
           /* If next item is alphabetically lower than current item,
           mark as a switch and break the loop: */
           shouldSwitch = true;
@@ -333,14 +335,14 @@ function sortListArtist() {
 
   function sortListlength() {
     var list, i, switching, b, shouldSwitch;
-    list = document.getElementById("listTracks");
+    list = document.getElementById("inventory");
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
       // Start by saying: no switching is done:
       switching = false;
-      b = list.getElementsByTagName("LI");
+      b = list.getElementsByClassName("searchResult");
       // Loop through all list items:
       for (i = 0; i < (b.length - 1); i++) {
         // Start by saying there should be no switching:
@@ -349,8 +351,8 @@ function sortListArtist() {
         switch place with the current item: */
 
         //to get just the track_id
-        console.log(toSeconds(b[i].innerText.toLowerCase().split("playtime: ")[1].split(",")[0]));
-        if (toSeconds(b[i].innerText.toLowerCase().split("playtime: ")[1].split(",")[0]) > toSeconds(b[i + 1].innerText.toLowerCase().split("playtime: ")[1].split(",")[0])) {
+        console.log(toSeconds(b[i].innerText.toLowerCase().split("duration: ")[1].split("\n")[0]));
+        if (toSeconds(b[i].innerText.toLowerCase().split("duration: ")[1].split("\n")[0]) > toSeconds(b[i + 1].innerText.toLowerCase().split("duration: ")[1].split("\n")[0])) {
           /* If next item is alphabetically lower than current item,
           mark as a switch and break the loop: */
           shouldSwitch = true;
@@ -474,40 +476,44 @@ searchButtonTracks.addEventListener('click',searchTrackName);
         
         
         //Creating the info that we will populate
+        div = document.createElement("div");
+        div.classList.add("searchResult");
         const id = document.createTextNode("id: "+data.data[i].track_id);
         bold = document.createElement('strong'),
         bold.appendChild(id);
-        l.appendChild(bold);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(bold);
+        div.appendChild(document.createElement("br"));
 
         const handle = document.createTextNode("Track Name: "+data.data[i].track_title);
-        l.appendChild(handle);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(handle);
+        div.appendChild(document.createElement("br"));
 
         const dateCreated = document.createTextNode("Duration: "+data.data[i].track_duration);
-        l.appendChild(dateCreated);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(dateCreated);
+        div.appendChild(document.createElement("br"));
 
         const contact = document.createTextNode("Date Recorded: "+ data.data[i].track_date_recorded);
-        l.appendChild(contact);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(contact);
+        div.appendChild(document.createElement("br"));
 
         const assLabel = document.createTextNode("Date Created: "+data.data[i].track_date_created);
-        l.appendChild(assLabel);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(assLabel);
+        div.appendChild(document.createElement("br"));
 
         const activeE = document.createTextNode("Album Name: "+data.data[i].album_title);
-        l.appendChild(activeE);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(activeE);
+        div.appendChild(document.createElement("br"));
 
         const activeB = document.createTextNode("Track Number In Album: "+data.data[i].track_number);
-        l.appendChild(activeB);
-        l.appendChild(document.createElement("br"));
+        div.appendChild(activeB);
+        div.appendChild(document.createElement("br"));
 
         const artistN = document.createTextNode("Recording Artist: "+data.data[i].artist_name);
-        l.appendChild(artistN);
-        l.appendChild(document.createElement("br"));
-        l.appendChild(document.createElement("br"));
+        div.appendChild(artistN);
+        div.appendChild(document.createElement("br"));
+        div.appendChild(document.createElement("br"));
+
+        l.appendChild(div);
         }
     })
     )

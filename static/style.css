@@ -14,7 +14,8 @@ h1{
 button{
     border-radius: 10px;
     border: 2px solid crimson;
-    background-color: aquamarine;
+    background-color: crimson;
+    font-weight: bold;
     transition-duration: 0.4s;
 }
 button:hover{
