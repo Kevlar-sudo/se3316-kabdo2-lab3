@@ -455,3 +455,74 @@ function sortListArtist() {
     })
     )
 };
+
+//for track query searching
+searchButtonTracks.addEventListener('click',searchTrackName);
+
+  //the front end for query searches
+  function searchTrackName(){
+    let input = searchBarTracks.value;
+    if(/^[A-Za-z0-9_]*$/.test(input) == false){
+      alert("Please only include Alphanumeric characters!");
+      return;
+    }
+
+    const l = document.getElementById('inventory');
+    while(l.firstChild){
+      l.removeChild(l.firstChild);
+  }
+    console.log(input);
+    fetch("/api/tracks?name="+input,{
+        method: 'GET',
+        
+    })
+    .then(res =>res.json()
+    .then(data => {
+        console.log(data);
+        console.log(data.data.length);
+
+        //we will only show the first 5 results thats why i =5
+        for(i = 0;i<5;i++){
+        const l = document.getElementById('inventory');
+        
+        
+        
+        //Creating the info that we will populate
+        const id = document.createTextNode("id: "+data.data[i].track_id);
+        bold = document.createElement('strong'),
+        bold.appendChild(id);
+        l.appendChild(bold);
+        l.appendChild(document.createElement("br"));
+
+        const handle = document.createTextNode("Track Name: "+data.data[i].track_title);
+        l.appendChild(handle);
+        l.appendChild(document.createElement("br"));
+
+        const dateCreated = document.createTextNode("Duration: "+data.data[i].track_duration);
+        l.appendChild(dateCreated);
+        l.appendChild(document.createElement("br"));
+
+        const contact = document.createTextNode("Date Recorded: "+ data.data[i].track_date_recorded);
+        l.appendChild(contact);
+        l.appendChild(document.createElement("br"));
+
+        const assLabel = document.createTextNode("Date Created: "+data.data[i].track_date_created);
+        l.appendChild(assLabel);
+        l.appendChild(document.createElement("br"));
+
+        const activeE = document.createTextNode("Album Name: "+data.data[i].album_title);
+        l.appendChild(activeE);
+        l.appendChild(document.createElement("br"));
+
+        const activeB = document.createTextNode("Track Number In Album: "+data.data[i].track_number);
+        l.appendChild(activeB);
+        l.appendChild(document.createElement("br"));
+
+        const artistN = document.createTextNode("Recording Artist: "+data.data[i].artist_name);
+        l.appendChild(artistN);
+        l.appendChild(document.createElement("br"));
+        l.appendChild(document.createElement("br"));
+        }
+    })
+    )
+};
