@@ -553,3 +553,13 @@ function deleteTrackFromPlaylist(){
   .catch()
   
 };
+
+document.getElementById("closeBtn").addEventListener('click',closeResults);
+
+function closeResults(){
+  const l = document.getElementById('inventory');
+    while(l.firstChild){
+      l.removeChild(l.firstChild);
+  }
+  dynamicResults.classList.replace("open-search","close-search");
+}
