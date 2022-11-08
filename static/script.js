@@ -139,8 +139,8 @@ function viewlist(){
         const texter = document.getElementById("cTrack");
         
        
-        
-        
+        //works kinda
+        if(data.noOfTracks >0){
         for(i =0; i<playListTracks[playListValue].length;i++)
        {
         
@@ -155,6 +155,10 @@ function viewlist(){
         var minutes = Math. floor(totalSeconds / 60);
         var seconds = totalSeconds - minutes * 60;
         texter.innerText = "Current Tracks\nNumber of tracks: "+ data.noOfTracks+"\nPlaylist Listening Time: "+minutes+":"+seconds;
+      }
+      else{
+        texter.innerText = "Selected Playlist is empty"
+      }
     })
     )
 };
@@ -174,13 +178,14 @@ function addTrack(){
         console.log(data);
         
         if(data['success'] == true){
+        const texter = document.getElementById("cTrack");
         const l = document.getElementById('listTracks');
         const item = document.createElement('li');
         item.appendChild(document.createTextNode(`track_id: ${data.data[0].track_id},  artist: ${data.data[0].artist_name}, album: ${data.data[0].album_title}, playtime: ${data.data[0].track_duration}, album: ${data.data[0].album_title}`));
         l.appendChild(item);
         playListTracks[document.getElementById('playsL').value].push([data.data[0].track_id,data.data[0].artist_name,data.data[0].album_title,data.data[0].track_duration,data.data[0].album_title]);
         //playListTracks[document.getElementById('playsL').value].push(["hello"]);
-        
+        texter.innerText = "Current Tracks"
         }
         //checking if the track exists in the database
         if(data['success'] == false){
