@@ -23,6 +23,8 @@ deleteList.addEventListener('click',deletePlaylist)
 document.getElementById("viewList").addEventListener('click',viewlist);
 document.getElementById("addTrack").addEventListener('click',addTrack);
 
+var playListTracks = {};
+
 
 //THIS WORKS lol but we need to format
 function searchArtistId(){
@@ -116,6 +118,7 @@ function deletePlaylist(){
 function viewlist(){
     var playListValue = document.getElementById('playsL').value;
     console.log(playListValue);
+    
     //this part is to clear the search upon consecutive view button clicks
     const l = document.getElementById('listTracks');
     //we loop through the list and while it has a child we remove them
@@ -130,12 +133,42 @@ function viewlist(){
     .then(data => {
         console.log(data);
         const l = document.getElementById('listTracks');
+        const texter = document.getElementById("cTrack");
+        console.log(data.noOfTracks);
+        texter.innerText = "Current Tracks\nNumber of tracks: "+ data.noOfTracks;
         
         for(i =0; i<data.data.length;i++)
        { 
         const item = document.createElement('li');
         item.appendChild(document.createTextNode("track_id: "+data.data[i].track_id));
-        l.appendChild(item);}
+        l.appendChild(item);
+        playListTracks.push(data.data[i].track_id);
+        console.log(playListTracks);
+    }
+        
+    })
+    )
+    console.log("2nd array print: "+playListTracks);
+    console.log("First track"+playListTracks[0]);
+    fetch("/api/tracks/"+3,{
+    method: 'GET',
+        
+    })
+    .then(res =>res.json()
+    .then(data => {
+        console.log(data);
+        console.log("hello brother");
+        if(data['success'] == true){
+        const l = document.getElementById('listTracks');
+        const item = document.createElement('li');
+        item.appendChild(document.createTextNode(`track_id: ${data.data[0].track_id},  artist: ${data.data[0].artist_name}, album: ${data.data[0].album_title}, playtime: ${data.data[0].track_duration}, album: ${data.data[0].album_title}`));
+        l.appendChild(item);
+        }
+        //checking if the track exists in the database
+        if(data['success'] == false){
+            alert("This track doesn't exist!");
+            return;
+        }
         
     })
     )
@@ -165,6 +198,7 @@ function addTrack(){
         
     })
     )
+    //basically we have to fetch /playlist/:name to get no of tracks and display it 
     
      
     const newTrack={
