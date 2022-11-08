@@ -30,7 +30,7 @@ input{
     width: 5ch;
 }
 /*the styling for the search buttons*/
-#searchButtonTracks, #searchButtonTracksId, #searchButtonArtist, #searchButtonArtistId,#sortArtist{
+#searchButtonTracks, #searchButtonTracksId, #searchButtonArtist, #searchButtonArtistId,#sortArtist,#sortAlbum,#sortTrack,#sortLength{
     padding: 6px 6px 6px 6px;
     border: 2px solid;
     border-radius: 5px 5px 5px 5px;
