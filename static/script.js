@@ -389,3 +389,69 @@ function sortListArtist() {
       }
     }
   };
+
+  searchButtonArtist.addEventListener('click',searchArtistName);
+
+  //the front end for query searches
+  function searchArtistName(){
+    let input = searchBarArtist.value;
+    if(/^[A-Za-z0-9_]*$/.test(input) == false){
+      alert("Please only include Alphanumeric characters!");
+      return;
+    }
+
+    const l = document.getElementById('inventory');
+    while(l.firstChild){
+      l.removeChild(l.firstChild);
+  }
+    console.log(input);
+    fetch("/api/artists?name="+input,{
+        method: 'GET',
+        
+    })
+    .then(res =>res.json()
+    .then(data => {
+        console.log(data);
+        console.log(data.data.length);
+
+        //we will only show the first 5 results thats why i =5
+        for(i = 0;i<5;i++){
+        const l = document.getElementById('inventory');
+        
+        
+        
+        //Creating the info that we will populate
+        const id = document.createTextNode("id: "+data.data[i].artist_id);
+        bold = document.createElement('strong'),
+        bold.appendChild(id);
+        l.appendChild(bold);
+        l.appendChild(document.createElement("br"));
+
+        const handle = document.createTextNode("handle: "+data.data[i].artist_handle);
+        l.appendChild(handle);
+        l.appendChild(document.createElement("br"));
+
+        const dateCreated = document.createTextNode("Date Created: "+data.data[i].artist_date_created);
+        l.appendChild(dateCreated);
+        l.appendChild(document.createElement("br"));
+
+        const contact = document.createTextNode("Contact: "+ data.data[i].artist_contact);
+        l.appendChild(contact);
+        l.appendChild(document.createElement("br"));
+
+        const assLabel = document.createTextNode("Associated Label: "+data.data[i].artist_associated_labels);
+        l.appendChild(assLabel);
+        l.appendChild(document.createElement("br"));
+
+        const activeE = document.createTextNode("Active Year End: "+data.data[i].artist_active_year_end);
+        l.appendChild(activeE);
+        l.appendChild(document.createElement("br"));
+
+        const activeB = document.createTextNode("Active Year Begin: "+data.data[i].artist_active_year_begin);
+        l.appendChild(activeB);
+        l.appendChild(document.createElement("br"));
+        l.appendChild(document.createElement("br"));
+        }
+    })
+    )
+};
