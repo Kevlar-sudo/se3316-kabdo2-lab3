@@ -17,6 +17,11 @@ deleteList.addEventListener('click',deletePlaylist)
 document.getElementById("viewList").addEventListener('click',viewlist);
 document.getElementById("addTrack").addEventListener('click',addTrack);
 
+//for the search results that appear only after search
+const dynamicResults = document.getElementById("intro");
+
+dynamicResults.classList.add("close-search");
+
 var playListTracks = {};
 var durations = {};
 
@@ -371,6 +376,11 @@ function sortListArtist() {
       return;
     }
 
+    //making the search results section visible
+    if(dynamicResults.classList.contains("close-search")){
+      dynamicResults.classList.replace("close-search","open-search");}
+
+
     const l = document.getElementById('inventory');
     while(l.firstChild){
       l.removeChild(l.firstChild);
@@ -433,6 +443,11 @@ searchButtonTracks.addEventListener('click',searchTrackName);
   //the front end for query searches
   function searchTrackName(){
     let input = searchBarTracks.value;
+
+    //making the search results section visible
+    if(dynamicResults.classList.contains("close-search")){
+      dynamicResults.classList.replace("close-search","open-search");}
+
     if(/^[A-Za-z0-9_ ]*$/.test(input) == false){
       alert("Please only include Alphanumeric characters!");
       return;
