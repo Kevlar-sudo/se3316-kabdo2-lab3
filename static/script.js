@@ -377,7 +377,7 @@ function sortListArtist() {
   //the front end for query searches
   function searchArtistName(){
     let input = searchBarArtist.value;
-    if(/^[A-Za-z0-9_ ]*$/.test(input) == false){
+    if(/[`~!@#$%^&*()|+\-=?;:..’“'"<>,€£¥•،٫؟»«\{\}\[\]\\\/]/.test(input) !== false){
       alert("Please only include Alphanumeric characters!");
       return;
     }
@@ -566,4 +566,156 @@ function closeResults(){
       l.removeChild(l.firstChild);
   }
   dynamicResults.classList.replace("open-search","close-search");
-}
+};
+
+//FOR SORTING THE PLAYLIST NOT THE SEARCH RESULTS
+document.getElementById("sortArtistPlaylist").addEventListener('click',sortPlaylistArtist);
+document.getElementById("sortTrackPlaylist").addEventListener('click',sortPlaylistTrack);
+document.getElementById("sortAlbumPlaylist").addEventListener('click',sortPlaylistAlbum);
+document.getElementById("sortLengthPlaylist").addEventListener('click',sortPlaylistlength);
+
+
+//for sorting the playlist
+  //here will go sorter function :O
+  function sortPlaylistArtist() {
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementById("listTracks");
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      b = list.getElementsByTagName("LI");
+      // Loop through all list items:
+      for (i = 0; i < (b.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Check if the next item should
+        switch place with the current item: */
+
+        //to get just the artist
+        
+        console.log(b[i].innerText.toLowerCase().split("artist: ")[1].split(",")[0]);
+        if (b[i].innerText.toLowerCase().split("artist: ")[1].split(",")[0] > b[i + 1].innerText.toLowerCase().split("artist: ")[1].split(",")[0]) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark the switch as done: */
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+    }
+  };
+
+  //to sort by track
+  function sortPlaylistTrack() {
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementById("listTracks");
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      b = list.getElementsByTagName("LI");
+      // Loop through all list items:
+      for (i = 0; i < (b.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Check if the next item should
+        switch place with the current item: */
+
+        //to get just the track_id
+        console.log(b[i].innerText.toLowerCase());
+        console.log(parseInt(b[i].innerText.toLowerCase().split("track_id: ")[1].split(",")[0]));
+        if (parseInt(b[i].innerText.toLowerCase().split("track_id: ")[1].split(",")[0]) > parseInt(b[i + 1].innerText.toLowerCase().split("track_id: ")[1].split(",")[0])) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark the switch as done: */
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+    }
+  };
+
+  function sortPlaylistAlbum() {
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementById("listTracks");
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      b = list.getElementsByTagName("LI");
+      // Loop through all list items:
+      for (i = 0; i < (b.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Check if the next item should
+        switch place with the current item: */
+
+        //to get just the artist
+        console.log(b[i].innerText.toLowerCase().split("album: ")[1].split(",")[0]);
+        if (b[i].innerText.toLowerCase().split("album: ")[1].split(",")[0] > b[i + 1].innerText.toLowerCase().split("album: ")[1].split(",")[0]) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark the switch as done: */
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+    }
+  };
+
+  function sortPlaylistlength() {
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementById("listTracks");
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      b = list.getElementsByTagName("LI");
+      // Loop through all list items:
+      for (i = 0; i < (b.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Check if the next item should
+        switch place with the current item: */
+
+        //to get just the track_id
+        console.log(toSeconds(b[i].innerText.toLowerCase().split("playtime: ")[1].split(",")[0]));
+        if (toSeconds(b[i].innerText.toLowerCase().split("playtime: ")[1].split(",")[0]) > toSeconds(b[i + 1].innerText.toLowerCase().split("playtime: ")[1].split(",")[0])) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark the switch as done: */
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+    }
+  };
