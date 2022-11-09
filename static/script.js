@@ -25,6 +25,7 @@ dynamicResults.classList.add("close-search");
 var playListTracks = {};
 var durations = {};
 
+
 //create new playlist front end WORKING
 function createPlaylist(){
     const newList={
@@ -127,9 +128,12 @@ function viewlist(){
         //adding the durations to an array with the playlist name
         durations[playListValue].push(playListTracks[playListValue][i][3]);
     }
-        var totalSeconds = durations[playListValue].map(toSeconds).reduce(sum);
-        var minutes = Math. floor(totalSeconds / 60);
-        var seconds = totalSeconds - minutes * 60;
+        var minutes =0;
+        var seconds =0;
+        var totalSeconds =0;
+        totalSeconds = durations[playListValue].map(toSeconds).reduce(sum);
+        minutes = Math. floor(totalSeconds / 60);
+        seconds = totalSeconds - minutes * 60;
         texter.innerText = "Current Tracks\nNumber of tracks: "+ data.noOfTracks+"\nPlaylist Listening Time: "+minutes+":"+seconds;
       }
       else{
