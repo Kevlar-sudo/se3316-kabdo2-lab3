@@ -7,6 +7,7 @@ const router = express.Router();
 let sql;
 
 let myArr = {};
+let playlists = [];
 
 //establishing a connection to the database CHANGE to ./music.db after tests
 const db = new sqlite.Database("./music.db",sqlite.OPEN_READWRITE,(err)=>{
@@ -235,12 +236,24 @@ router.route('/playlist')
     console.log("we want to create playlist: "+playlist_name);
     //this will keep track of the total number of tracks, initially zero when we create the list
     myArr[playlist_name] = 0;
+
+    //if we are trying to create a playlist that already exists
+    if(playlists.includes(playlist_name)== true){
+        return res.json({
+            status: 300,
+            success: false,
+            error: "This playlist name already exists"
+        });
+    }
+
     //add the playlist to our data structure
     try{
         sql = `CREATE TABLE IF NOT EXISTS ${playlist_name} (track_id INT)`;
         db.run(sql, (err)=>{
             if(err) return res.json({status:300,success:false,error:err});
 
+            playlists.push(playlist_name);
+            console.log(playlists);
             console.log("successful created playlist: "+playlist_name);
         })
         return res.json({
@@ -257,10 +270,23 @@ router.route('/playlist')
     }
 })
 //works to add new song to playlist
-//we specify the playlist_name (playlist to be added to) and track_id (track to be added) in JSON body
+
 .post((req,res)=>{
+
+
+//we specify the playlist_name (playlist to be added to) and track_id (track to be added) in JSON body
     try{
         const {playlist_name,track_id} = req.body;
+
+         //first we check if the playlist we are inserting into exists
+        if(playlists.includes(playlist_name)== false){
+        return res.json({
+            status: 300,
+            success: false,
+            error: "This playlist doesn't exist"
+        });
+        }
+
         sql = `INSERT INTO ${playlist_name} ( track_id) VALUES (?)`;
         db.run(sql,[track_id], (err)=>{
             if(err) return res.json({status:300,success:false,error:err});
@@ -349,8 +375,11 @@ router.route('/playlist/:name')
     }
 })
 
+//routes to a specific playlist
 router.route('/playlist/:name')
 
+//we want to delete a specific track from a specific playlist 
+//the playlist name will be part of the url and the track we want to delete is part of the JSON parameters
 .delete((req,res)=>{
     const {track_id} = req.body;
     console.log("we want to delete track: "+track_id+"from playlist: "+req.params.name);
