@@ -28,6 +28,12 @@ var durations = {};
 
 //create new playlist front end WORKING
 function createPlaylist(){
+
+  //verifying the name only has wanted characters
+  if(/[`~!@#$%^&*()|+\-=?;:..’“'"<>,€£¥•،٫؟»«\{\}\[\]\\\/]/.test(document.getElementById("playlistName").value) !== false){
+    alert("Please only include Alphanumeric characters!");
+    return;
+  }
     const newList={
         playlist_name: document.getElementById("playlistName").value
     }
@@ -145,6 +151,13 @@ function viewlist(){
 //the function to 
 function addTrack(){
     let input = document.getElementById("trackName").value
+
+    //testing the input for any unwanted characters, allows all languages
+    
+    if(/^\d+$/.test(input) == false){
+      alert("Please enter digits between 0-9 only!");
+      return;
+    }
     //make sure our json object has an array for the playlist name so we can push later on in the function
     if(playListTracks[document.getElementById('playsL').value] == undefined)
     {playListTracks[document.getElementById('playsL').value] = [];}
@@ -454,7 +467,7 @@ searchButtonTracks.addEventListener('click',searchTrackName);
     if(dynamicResults.classList.contains("close-search")){
       dynamicResults.classList.replace("close-search","open-search");}
 
-    if(/^[A-Za-z0-9_ ]*$/.test(input) == false){
+    if(/[`~!@#$%^&*()|+\-=?;:..’“'"<>,€£¥•،٫؟»«\{\}\[\]\\\/]/.test(input) !== false){
       alert("Please only include Alphanumeric characters!");
       return;
     }
@@ -527,8 +540,13 @@ document.getElementById("deleteTrack").addEventListener('click',deleteTrackFromP
 
 //to delete a specific track from a playlist
 function deleteTrackFromPlaylist(){
-  
   var playListValue = document.getElementById('playsL').value;
+
+  if(/^\d+$/.test(playListValue) == false){
+    alert("Please enter digits between 0-9 only!");
+    return;
+  }
+  
   const removeTrack={
       track_id: document.getElementById("trackNameDelete").value
   }
