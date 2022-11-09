@@ -7,7 +7,7 @@ h1{
 }
 .intro{
     border-radius: 25px;
-    border: 2px solid #73ad21;
+    border: 2px solid #0d0e0d;
     padding: 20px;
     background-color: cornsilk;
 }
@@ -22,9 +22,9 @@ button:hover{
     background-color: wheat;
 }
 .admin{
-    background-color: paleturquoise;
+    background-color: rgb(171, 184, 184);
     border-radius: 25px;
-    border: 2px solid #73ad21;
+    border: 2px solid #0d0e0d;
     padding: 20px;
 }
 input{
@@ -77,4 +77,10 @@ input{
  .open-search{
    visibility: visible;
    
+}
+
+#bottom,.bottom{
+    text-align: center;
+    align-items: center;
+    font-size: small;
 }
