@@ -323,12 +323,23 @@ router.route('/playlist')
             success: false,
         });
     }
+    //if the playlsit doesn't exist we return an error
+    if(playlists.includes(playlist_name)== false){
+        return res.json({
+            status: 300,
+            success: false,
+            error: "This playlist doesn't exist"
+        });
+        }
+
     try{
         const {playlist_name} = req.body;
         sql = `DROP TABLE IF EXISTS ${playlist_name}`;
+        
         db.run(sql, (err)=>{
             if(err) return res.json({status:300,success:false,error:err});
 
+            playlists.pop(playlist_name);
             console.log("successful delete");
         })
         return res.json({
